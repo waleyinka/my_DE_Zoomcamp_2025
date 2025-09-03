@@ -1,0 +1,40 @@
+{{ config(schema='de_zoomcamp') }}
+
+with
+
+source as (
+
+    select * from {{source('staging', 'green_tripdata')}}
+
+),
+
+renamed as (
+   
+    select
+        vendorid,
+        lpep_pickup_datetime,
+        lpep_dropoff_datetime,
+        store_and_fwd_flag,
+        ratecodeid,
+        passenger_count,
+        trip_distance,
+        fare_amount,
+        extra,
+        mta_tax,
+        tip_amount,
+        tolls_amount,
+        payment_type,
+        distance_between_service,
+        time_between_service,
+        trip_type,
+        improvement_surcharge,
+        pulocationid,
+        dolocationid,
+        data_file_year,
+        data_file_month
+
+    from source
+
+)
+
+select * from renamed
