@@ -48,7 +48,7 @@ models:
             description: locationid where the meter was engaged.
             tests:
               - relationships:
-                  to: ref('taxi_zones_lookup')
+                  to: ref('taxi_zone_lookup')
                   field: locationid
                   severity: warn
 
@@ -56,7 +56,7 @@ models:
             description: locationid where the meter was engaged.
             tests:
               - relationships:
-                  to: ref('taxi_zones_lookup')
+                  to: ref('taxi_zone_lookup')
                   field: locationid
 
           - name: RateCodeID 
