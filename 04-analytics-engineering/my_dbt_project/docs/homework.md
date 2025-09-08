@@ -122,7 +122,7 @@ where pickup_datetime >= CURRENT_DATE - INTERVAL '{{ var("days_back", env_var("D
 
 Considering the data lineage below **and** that taxi_zone_lookup is the **only** materialization build (from a .csv seed file):
 
-![image](./homework_q2.png)
+![image](./homework_q3.png)
 
 Select the option that does NOT apply for materializing fct_taxi_monthly_zone_revenue:
 
