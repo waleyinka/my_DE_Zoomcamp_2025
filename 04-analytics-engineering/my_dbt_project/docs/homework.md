@@ -124,14 +124,22 @@ Considering the data lineage below **and** that taxi_zone_lookup is the **only**
 
 ![image](./homework_q3.png)
 
-Select the option that does NOT apply for materializing fct_taxi_monthly_zone_revenue:
+Select the option that does NOT apply for materializing `fct_taxi_monthly_zone_revenue`:
 
-- dbt run: This runs all models in the project. **VALID**
+*Explanation:*
 
-- dbt run --select +models/core/dim_taxi_trips.sql+ --target prod: This runs dim_taxi_trips and any dependent models. fct_taxi_monthly_zone_revenue depends on dim_taxi_trips. **VALID**
+✅ `dbt run`
+Runs all models, so it applies for materializing fct_taxi_monthly_zone_revenue.
 
-- dbt run --select +models/core/fct_taxi_monthly_zone_revenue.sql: This runs fct_taxi_monthly_zone_revenue and all the models it depends on. **VALID**
+✅ `dbt run --select +models/core/dim_taxi_trips.sql+ --target prod`
+The + before and after means it runs dim_taxi_trips and all its dependencies and dependents, which includes `fct_taxi_monthly_zone_revenue`.
 
-- dbt run --select +models/core/: This runs all models within models/core/, including fct_taxi_monthly_zone_revenue. **VALID**
+✅ `dbt run --select +models/core/fct_taxi_monthly_zone_revenue.sql`
+The + ensures dependencies `like dim_taxi_trips` are run, so this applies.
 
-- dbt run --select models/staging/+: This only runs models in models/staging/ and their dependencies, but not necessarily fct_taxi_monthly_zone_revenue, as it is located in models/core/ . **NOT VALID**
+✅ `dbt run --select +models/core/`
+Runs all models in core/, which includes `dim_taxi_trips` and `fct_taxi_monthly_zone_revenue`, so it applies.
+
+❌ `dbt run --select models/staging/+`
+This only runs staging models (`stg_green_tripdata`, `stg_yellow_tripdata`, etc.), not `fct_taxi_monthly_zone_revenue`.
+Since `fct_taxi_monthly_zone_revenue` is in `core/`, this option does NOT apply.
