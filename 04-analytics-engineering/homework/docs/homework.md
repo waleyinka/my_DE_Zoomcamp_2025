@@ -106,12 +106,11 @@ where pickup_datetime >= CURRENT_DATE - INTERVAL '{{ var("days_back", env_var("D
 
 ```
 
+- `var("days_back", ...)`: Looks for a command-line argument first.
 
-- First, it checks if the variable "days_back" is passed via the dbt command line
+- `env_var("DAYS_BACK", "30")`: If no command-line argument is found, it falls back to the DAYS_BACK environment variable.
 
-- If not, it falls back to the environment variable DAYS_BACK 
-
-- If neither is provided, it defaults to 30 days.
+- `"30"`: If neither is found, it defaults to 30 days.
 
 
 
