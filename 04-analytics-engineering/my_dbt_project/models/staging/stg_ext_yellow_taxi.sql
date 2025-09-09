@@ -1,21 +1,17 @@
-{{
-    config(
-        materialized='view'
-    )
-}}
+{{ config(materialized='view') }}
  
 with tripdata as 
 (
   select *,
-    row_number() over(partition by vendorid, tpep_pickup_datetime) as rn
+    row_number() over(partition by VendorID, tpep_pickup_datetime) as rn
   from {{ source('staging','ext_yellow_taxi') }}
   where VendorID is not null 
 )
 select
    -- identifiers
-    {{ dbt_utils.generate_surrogate_key(['VendorID', 'tpep_pickup_datetime']) }} as trip_id,    
-    {{ dbt.safe_cast("VendorID", api.Column.translate_type("integer")) }} as vendor_id,
-    {{ dbt.safe_cast("RatecodeID", api.Column.translate_type("integer")) }} as ratecode_id,
+    {{ dbt_utils.generate_surrogate_key(['VendorID', 'tpep_pickup_datetime']) }} as tripid,    
+    {{ dbt.safe_cast("VendorID", api.Column.translate_type("integer")) }} as vendorid,
+    {{ dbt.safe_cast("RatecodeID", api.Column.translate_type("integer")) }} as ratecodeid,
     {{ dbt.safe_cast("PULocationID", api.Column.translate_type("integer")) }} as pickup_locationid,
     {{ dbt.safe_cast("DOLocationID", api.Column.translate_type("integer")) }} as dropoff_locationid,
 
@@ -43,10 +39,3 @@ select
     {{ get_payment_type_description('payment_type') }} as payment_type_description
 from tripdata
 where rn = 1
-
--- dbt build --select <model.sql> --vars '{'is_test_run: false}'
-{% if var('is_test_run', default=true) %}
-
-  limit 100
-
-{% endif %}
