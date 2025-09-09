@@ -281,6 +281,14 @@ LIMIT 10
 
 ```
 
+**Check results:**
+
+<br>
+
+!![image](./question5 - bigquery.png)
+
+<br>
+
 
 
 ## Question 6
@@ -356,7 +364,7 @@ WHERE month = 4 AND year = 2020;
 
 <br>
 
-![ae64](images/ae64.jpg)
+!![image](./question6 - bigquery.png)
 
 <br>
 
@@ -433,6 +441,6 @@ WHERE trip_rank = 2;
 
 <br>
 
-![ae64](images/ae64.jpg)
+!![image](./question7 - bigquery.png)
 
 <br>
