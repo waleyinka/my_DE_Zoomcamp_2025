@@ -5,14 +5,26 @@
 }}
 
 with trips_data as (
-    select * from {{ ref('fct_all_trips') }}
+    select *,
+        EXTRACT(YEAR FROM pickup_datetime) AS trip_year,
+        EXTRACT(QUARTER FROM pickup_datetime) AS trip_quarter,
+        EXTRACT(MONTH FROM pickup_datetime) AS month,
+        CONCAT(EXTRACT(YEAR FROM pickup_datetime), '/Q', EXTRACT(QUARTER FROM pickup_datetime)) AS year_quarter 
+        
+    from {{ ref('fct_all_trips') }}
 )
     select 
-    -- Revenue grouping 
+    -- Reveneue grouping 
     pickup_zone as revenue_zone,
     {{ dbt.date_trunc("month", "pickup_datetime") }} as revenue_month, 
 
     service_type, 
+
+    -- Add new date components
+    trip_year AS year,
+    trip_quarter AS quarter,
+    month,
+    year_quarter,
 
     -- Revenue calculation 
     sum(fare_amount) as revenue_monthly_fare,
@@ -25,9 +37,9 @@ with trips_data as (
     sum(total_amount) as revenue_monthly_total_amount,
 
     -- Additional calculations
-    count(trip_id) as total_monthly_trips,
+    count(tripid) as total_monthly_trips,
     avg(passenger_count) as avg_monthly_passenger_count,
     avg(trip_distance) as avg_monthly_trip_distance
 
     from trips_data
-    group by 1,2,3
+    group by 1,2,3, 4, 5, 6, 7 

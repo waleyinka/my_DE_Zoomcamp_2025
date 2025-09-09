@@ -1,6 +1,3 @@
---Union of both green and yellow staging tables, then join dimension table (dim_zones) on pickup_zone and pickup_borough
---  (to get pickup_locationid), and again on dropoff_zone and dropoff_borough (to get dropoff_locationid)
-
 {{
     config(
         materialized='table'
@@ -26,7 +23,7 @@ dim_zones as (
     select * from {{ ref('dim_zones') }}
     where borough != 'Unknown'
 )
-select trips_unioned.trip_id, 
+select trips_unioned.tripid, 
     trips_unioned.vendorid, 
     trips_unioned.service_type,
     trips_unioned.ratecodeid, 
