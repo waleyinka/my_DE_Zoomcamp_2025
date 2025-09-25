@@ -24,8 +24,6 @@ Different ways for processing data:
 
 - **STREAMING**
 
-
-
 ----
 
 
@@ -166,12 +164,3 @@ All the files are [here](./06_spark_gcs.ipynb)
 
 - You can see the jobs at `localhost:4040``
 <img src="./img/spark_job_example.png" width="80%">
-
----
-
-
-
-
-
-
-
