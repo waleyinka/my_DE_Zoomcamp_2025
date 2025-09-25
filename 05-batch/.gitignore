@@ -1,0 +1,7 @@
+*.parquet
+*.csv
+*.avro
+*.json
+*.crc
+*.log
+data/
