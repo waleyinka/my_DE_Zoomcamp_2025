@@ -5,3 +5,5 @@
 *.crc
 *.log
 data/
+lib/
+.ipynb_checkpoints/
